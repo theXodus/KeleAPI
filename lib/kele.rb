@@ -1,5 +1,6 @@
 require 'json'
 require 'httparty'
+require 'table_print'
 
 class Kele
   include HTTParty
@@ -14,6 +15,11 @@ class Kele
 
   def get_me
     response = self.class.get("#{@base_uri}/users/me", headers: { "authorization" => @auth_token })
-    JSON.parse(response.to_json)
+    response.parsed_response
+  end
+
+  def get_mentor_availability(id)
+    response = self.class.get("#{@base_uri}/mentors/#{id}/student_availability", headers: { "authorization" => @auth_token})
+    tp response.parsed_response # tp calls table_print
   end
 end
