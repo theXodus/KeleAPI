@@ -1,10 +1,12 @@
 require 'json'
 require 'httparty'
 require 'table_print'
+require 'roadmap'
 
 class Kele
   include HTTParty
   include JSON
+  include Roadmap
 
   def initialize(email, password)
     @base_uri = 'https://www.bloc.io/api/v1'
@@ -19,7 +21,7 @@ class Kele
   end
 
   def get_mentor_availability(id)
-    response = self.class.get("#{@base_uri}/mentors/#{id}/student_availability", headers: { "authorization" => @auth_token})
+    response = self.class.get("#{@base_uri}/mentors/#{id}/student_availability", headers: { "authorization" => @auth_token })
     tp response.parsed_response # tp calls table_print
   end
 end
